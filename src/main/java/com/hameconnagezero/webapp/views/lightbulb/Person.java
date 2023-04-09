@@ -1,4 +1,4 @@
-package com.hameconnagezero.webapp.views.lightsailadmin;
+package com.hameconnagezero.webapp.views.lightbulb;
 
 public class Person {
 

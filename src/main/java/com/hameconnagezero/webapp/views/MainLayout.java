@@ -9,7 +9,6 @@ import com.hameconnagezero.webapp.views.lightbulb.LightBulbView;
 import com.hameconnagezero.webapp.views.lightsail.LightSailView;
 import com.hameconnagezero.webapp.views.lightsailadmin.LightSailAdminView;
 import com.hameconnagezero.webapp.views.lightsensor.LightSensorView;
-import com.hameconnagezero.webapp.views.login.LoginView;
 import com.hameconnagezero.webapp.views.myhome.MyHomeView;
 import com.hameconnagezero.webapp.views.products.ProductsView;
 import com.hameconnagezero.webapp.views.services.ServicesView;
@@ -17,14 +16,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.contextmenu.MenuItem;
-import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.Nav;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.UnorderedList;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.router.RouterLink;
@@ -103,7 +95,12 @@ public class MainLayout extends AppLayout {
         Div layout = new Div();
         layout.addClassNames(Display.FLEX, AlignItems.CENTER, Padding.Horizontal.LARGE);
 
-        H1 appName = new H1("Hameconnage Zero");
+        Image logoHZ = new Image("images/HZ_Logo.png", "HZLOGO");
+        logoHZ.setHeight("48px");
+        logoHZ.setWidth("96px");
+        layout.add(logoHZ);
+
+        H1 appName = new H1("Hameconnage Zéro");
         appName.addClassNames(Margin.Vertical.MEDIUM, Margin.End.AUTO, FontSize.LARGE);
         layout.add(appName);
 
@@ -160,29 +157,33 @@ public class MainLayout extends AppLayout {
     }
 
     private MenuItemInfo[] createMenuItems() {
+        Image imgLightSail= new Image("icons/LightSail.png", "LightSail");
+        imgLightSail.setHeight("24px");
+        imgLightSail.setWidth("24px");
+        Image imgLightSail2= new Image("icons/LightSail.png", "LightSail");
+        imgLightSail2.setHeight("24px");
+        imgLightSail2.setWidth("24px");
+        Image imgLightBulb= new Image("icons/LightBulb.png", "LightBulb");
+        imgLightBulb.setHeight("24px");
+        imgLightBulb.setWidth("24px");
+        Image imgLightSensor= new Image("icons/LightSensor.png", "LightSensor");
+        imgLightSensor.setHeight("24px");
+        imgLightSensor.setWidth("24px");
+        Image imgCyInvestigation= new Image("icons/CyInvestigation.png", "CyInvestigation");
+        imgCyInvestigation.setHeight("24px");
+        imgCyInvestigation.setWidth("24px");
+
         return new MenuItemInfo[]{ //
-                new MenuItemInfo("Home", LineAwesomeIcon.GLOBE_SOLID.create(), HomeView.class), //
-
-                new MenuItemInfo("Products", LineAwesomeIcon.TH_LIST_SOLID.create(), ProductsView.class), //
-
+                new MenuItemInfo("Origine", LineAwesomeIcon.GLOBE_SOLID.create(), HomeView.class), //
+                new MenuItemInfo("Produits", LineAwesomeIcon.TH_LIST_SOLID.create(), ProductsView.class), //
                 new MenuItemInfo("Services", LineAwesomeIcon.TH_LIST_SOLID.create(), ServicesView.class), //
-
-                new MenuItemInfo("About", LineAwesomeIcon.FILE.create(), AboutView.class), //
-
-                new MenuItemInfo("MyHome", LineAwesomeIcon.FILE.create(), MyHomeView.class), //
-
-                new MenuItemInfo("LightSail", LineAwesomeIcon.COLUMNS_SOLID.create(), LightSailView.class), //
-
-                new MenuItemInfo("LightSail (Admin)", LineAwesomeIcon.LIST_SOLID.create(), LightSailAdminView.class), //
-
-                new MenuItemInfo("LightBulb", LineAwesomeIcon.COMMENTS.create(), LightBulbView.class), //
-
-                new MenuItemInfo("LightSensor", LineAwesomeIcon.COLUMNS_SOLID.create(), LightSensorView.class), //
-
-                new MenuItemInfo("CyInvestigations", LineAwesomeIcon.FILE.create(), CyInvestigationsView.class), //
-
-                new MenuItemInfo("Login", LineAwesomeIcon.FILE.create(), LoginView.class), //
-
+                new MenuItemInfo("À propos de nous", LineAwesomeIcon.FILE.create(), AboutView.class), //
+                new MenuItemInfo("Zone Clients", LineAwesomeIcon.GLOBE_SOLID.create(), MyHomeView.class), //
+                new MenuItemInfo("LightSail", imgLightSail, LightSailView.class), //
+                new MenuItemInfo("LightSail (Admin)", imgLightSail2, LightSailAdminView.class), //
+                new MenuItemInfo("LightBulb", imgLightBulb, LightBulbView.class), //
+                new MenuItemInfo("LightSensor", imgLightSensor, LightSensorView.class), //
+                new MenuItemInfo("CyInvestigations", imgCyInvestigation, CyInvestigationsView.class), //
         };
     }
 
