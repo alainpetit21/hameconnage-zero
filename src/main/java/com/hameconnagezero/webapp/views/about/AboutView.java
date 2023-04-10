@@ -20,7 +20,6 @@ public class AboutView extends VerticalLayout {
     public AboutView() {
         setSpacing(true);
 
-
         H2 header = new H2("À propos de \"Hameçonnage Zéro\"");
         header.addClassNames(LumoUtility.Margin.Top.XLARGE, LumoUtility.Margin.Bottom.MEDIUM);
         add(header);
