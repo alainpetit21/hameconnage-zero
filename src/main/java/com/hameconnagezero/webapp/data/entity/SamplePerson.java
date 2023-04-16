@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
 
+
 @Entity
 public class SamplePerson extends AbstractEntity {
 
@@ -65,5 +66,4 @@ public class SamplePerson extends AbstractEntity {
     public void setImportant(boolean important) {
         this.important = important;
     }
-
 }

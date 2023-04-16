@@ -12,6 +12,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "application_user")
 public class User extends AbstractEntity {
@@ -26,6 +27,7 @@ public class User extends AbstractEntity {
     @Lob
     @Column(length = 1000000)
     private byte[] profilePicture;
+
 
     public String getUsername() {
         return username;

@@ -1,14 +1,11 @@
 package com.hameconnagezero.webapp.views.home;
 
 import com.hameconnagezero.webapp.views.MainLayout;
-import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -16,6 +13,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+
 
 @PageTitle("Home")
 @Route(value = "home", layout = MainLayout.class)
@@ -26,20 +24,18 @@ public class HomeView extends VerticalLayout {
     private TextField name;
     private Button sayHello;
 
+
     public HomeView() {
         setSpacing(true);
-
 
         H2 header = new H2("Bienvenue sur le site de \"Hameçonnage Zéro\"");
         header.addClassNames(LumoUtility.Margin.Top.XLARGE, LumoUtility.Margin.Bottom.MEDIUM);
         add(header);
 
-
         Image img = new Image("images/HZ_LogoBig.png", "HZ_LogoBig");
         img.setWidth("512px");
         img.setWidth("256px");
         add(img);
-
 
         add(new Paragraph("Nous sommes une compagnie spécialisée en renseignement des cybermenaces. Nous sommes un leader dans la lutte contre l'hameçonnage, et nous sommes fiers de vous offrir des produits de pointe basés sur l'IA pour détecter les courriels malveillants. En plus de cela, nous proposons une plate-forme de formation et des campagnes de sensibilisation au hameçonnage. Fondée en 2020, notre entreprise a été créée en réponse à l'augmentation des courriels d'hameçonnage liés à la pandémie de COVID-19. Depuis lors, nous avons travaillé dur pour offrir des solutions efficaces pour aider les entreprises et les particuliers à se protéger contre ces menaces."));
 
@@ -68,5 +64,4 @@ public class HomeView extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         getStyle().set("text-align", "center");
     }
-
 }

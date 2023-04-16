@@ -1,7 +1,7 @@
 package com.hameconnagezero.webapp.views.lightsensor;
 
-import com.hameconnagezero.webapp.data.entity.SamplePerson;
-import com.hameconnagezero.webapp.data.service.SamplePersonService;
+import com.hameconnagezero.webapp.data.entity.Email;
+import com.hameconnagezero.webapp.data.service.EmailService;
 import com.hameconnagezero.webapp.views.MainLayout;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -29,41 +29,43 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import jakarta.annotation.security.PermitAll;
-import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
+import java.util.Optional;
+
+
 @PageTitle("LightSensor")
-@Route(value = "LightSensor/:samplePersonID?/:action?(edit)", layout = MainLayout.class)
+@Route(value = "LightSensor/:emailID?/:action?(edit)", layout = MainLayout.class)
 @PermitAll
 @Uses(Icon.class)
 public class LightSensorView extends Div implements BeforeEnterObserver {
 
-    private final String SAMPLEPERSON_ID = "samplePersonID";
-    private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "LightSensor/%s/edit";
+    private final String EMAIL_ID = "emailID";
+    private final String EMAIL_EDIT_ROUTE_TEMPLATE = "LightSensor/%s/edit";
+    private final Grid<Email> grid = new Grid<>(Email.class, false);
 
-    private final Grid<SamplePerson> grid = new Grid<>(SamplePerson.class, false);
+    private DatePicker dateReceived;
+    private TextField emailFrom;
+    private TextField emailReplyTo;
+    private TextField emailTo;
+    private TextField subject;
+    private TextField text;
+    private Checkbox hasAttachment;
+    private Checkbox wasInvestigated;
 
-    private TextField firstName;
-    private TextField lastName;
-    private TextField email;
-    private TextField phone;
-    private DatePicker dateOfBirth;
-    private TextField occupation;
-    private TextField role;
-    private Checkbox important;
+    private final Button cancel = new Button("Annuler");
+    private final Button save = new Button("Enregistrer");
 
-    private final Button cancel = new Button("Cancel");
-    private final Button save = new Button("Save");
+    private final BeanValidationBinder<Email> binder;
 
-    private final BeanValidationBinder<SamplePerson> binder;
+    private Email email;
 
-    private SamplePerson samplePerson;
+    private final EmailService emailService;
 
-    private final SamplePersonService samplePersonService;
 
-    public LightSensorView(SamplePersonService samplePersonService) {
-        this.samplePersonService = samplePersonService;
+    public LightSensorView(EmailService emailService) {
+        this.emailService = emailService;
         addClassNames("light-sensor-view");
 
         // Create UI
@@ -75,23 +77,30 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
         add(splitLayout);
 
         // Configure Grid
-        grid.addColumn("firstName").setAutoWidth(true);
-        grid.addColumn("lastName").setAutoWidth(true);
-        grid.addColumn("email").setAutoWidth(true);
-        grid.addColumn("phone").setAutoWidth(true);
-        grid.addColumn("dateOfBirth").setAutoWidth(true);
-        grid.addColumn("occupation").setAutoWidth(true);
-        grid.addColumn("role").setAutoWidth(true);
-        LitRenderer<SamplePerson> importantRenderer = LitRenderer.<SamplePerson>of(
-                "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
-                .withProperty("icon", important -> important.isImportant() ? "check" : "minus").withProperty("color",
-                        important -> important.isImportant()
+        grid.addColumn("dateReceived").setAutoWidth(true);
+        grid.addColumn("emailFrom").setAutoWidth(true);
+        grid.addColumn("emailReplyTo").setAutoWidth(true);
+        grid.addColumn("emailTo").setAutoWidth(true);
+        grid.addColumn("subject").setAutoWidth(true);
+        grid.addColumn("text").setAutoWidth(true);
+        LitRenderer<Email> attachmentRenderer = LitRenderer.<Email>of(
+                        "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
+                .withProperty("icon", attachment -> attachment.hasAttachment() ? "check" : "minus").withProperty("color",
+                        attachment -> attachment.hasAttachment()
                                 ? "var(--lumo-primary-text-color)"
                                 : "var(--lumo-disabled-text-color)");
 
-        grid.addColumn(importantRenderer).setHeader("Important").setAutoWidth(true);
+        grid.addColumn(attachmentRenderer).setHeader("Attachments").setAutoWidth(true);
+        LitRenderer<Email> investigatedRenderer = LitRenderer.<Email>of(
+                        "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
+                .withProperty("icon", investigated -> investigated.wasInvestigated() ? "check" : "minus").withProperty("color",
+                        investigated -> investigated.wasInvestigated()
+                                ? "var(--lumo-primary-text-color)"
+                                : "var(--lumo-disabled-text-color)");
 
-        grid.setItems(query -> samplePersonService.list(
+        grid.addColumn(investigatedRenderer).setHeader("Investigated").setAutoWidth(true);
+
+        grid.setItems(query -> emailService.list(
                 PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
                 .stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
@@ -99,7 +108,7 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
         // when a row is selected or deselected, populate form
         grid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() != null) {
-                UI.getCurrent().navigate(String.format(SAMPLEPERSON_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
+                UI.getCurrent().navigate(String.format(EMAIL_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
             } else {
                 clearForm();
                 UI.getCurrent().navigate(LightSensorView.class);
@@ -107,7 +116,7 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
         });
 
         // Configure Form
-        binder = new BeanValidationBinder<>(SamplePerson.class);
+        binder = new BeanValidationBinder<>(Email.class);
 
         // Bind fields. This is where you'd define e.g. validation rules
 
@@ -120,11 +129,11 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
 
         save.addClickListener(e -> {
             try {
-                if (this.samplePerson == null) {
-                    this.samplePerson = new SamplePerson();
+                if (this.email == null) {
+                    this.email = new Email();
                 }
-                binder.writeBean(this.samplePerson);
-                samplePersonService.update(this.samplePerson);
+                binder.writeBean(this.email);
+                emailService.update(this.email);
                 clearForm();
                 refreshGrid();
                 Notification.show("Data updated");
@@ -142,14 +151,14 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
-        Optional<Long> samplePersonId = event.getRouteParameters().get(SAMPLEPERSON_ID).map(Long::parseLong);
-        if (samplePersonId.isPresent()) {
-            Optional<SamplePerson> samplePersonFromBackend = samplePersonService.get(samplePersonId.get());
-            if (samplePersonFromBackend.isPresent()) {
-                populateForm(samplePersonFromBackend.get());
+        Optional<Long> emailId = event.getRouteParameters().get(EMAIL_ID).map(Long::parseLong);
+        if (emailId.isPresent()) {
+            Optional<Email> emailFromBackend = emailService.get(emailId.get());
+            if (emailFromBackend.isPresent()) {
+                populateForm(emailFromBackend.get());
             } else {
                 Notification.show(
-                        String.format("The requested samplePerson was not found, ID = %s", samplePersonId.get()), 3000,
+                        String.format("The requested samplePerson was not found, ID = %s", emailId.get()), 3000,
                         Notification.Position.BOTTOM_START);
                 // when a row is selected but the data is no longer available,
                 // refresh grid
@@ -168,15 +177,15 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
         editorLayoutDiv.add(editorDiv);
 
         FormLayout formLayout = new FormLayout();
-        firstName = new TextField("First Name");
-        lastName = new TextField("Last Name");
-        email = new TextField("Email");
-        phone = new TextField("Phone");
-        dateOfBirth = new DatePicker("Date Of Birth");
-        occupation = new TextField("Occupation");
-        role = new TextField("Role");
-        important = new Checkbox("Important");
-        formLayout.add(firstName, lastName, email, phone, dateOfBirth, occupation, role, important);
+        dateReceived = new DatePicker("dateReceived");
+        emailFrom = new TextField("emailFrom");
+        emailReplyTo = new TextField("emailReplyTo");
+        emailTo = new TextField("emailTo");
+        subject = new TextField("subject");
+        text = new TextField("text");
+        hasAttachment = new Checkbox("hasAttachment");
+        wasInvestigated = new Checkbox("wasInvestigated");
+        formLayout.add(dateReceived, emailFrom, emailReplyTo, emailTo, subject, text, hasAttachment, wasInvestigated);
 
         editorDiv.add(formLayout);
         createButtonLayout(editorLayoutDiv);
@@ -209,9 +218,9 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
         populateForm(null);
     }
 
-    private void populateForm(SamplePerson value) {
-        this.samplePerson = value;
-        binder.readBean(this.samplePerson);
+    private void populateForm(Email value) {
+        this.email = value;
+        binder.readBean(this.email);
 
     }
 }

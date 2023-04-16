@@ -22,33 +22,15 @@ import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
-import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
-import com.vaadin.flow.theme.lumo.LumoUtility.BoxSizing;
-import com.vaadin.flow.theme.lumo.LumoUtility.Display;
-import com.vaadin.flow.theme.lumo.LumoUtility.FlexDirection;
-import com.vaadin.flow.theme.lumo.LumoUtility.FontSize;
-import com.vaadin.flow.theme.lumo.LumoUtility.FontWeight;
-import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
-import com.vaadin.flow.theme.lumo.LumoUtility.Height;
-import com.vaadin.flow.theme.lumo.LumoUtility.ListStyleType;
-import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
-import com.vaadin.flow.theme.lumo.LumoUtility.Overflow;
-import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
-import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
-import com.vaadin.flow.theme.lumo.LumoUtility.Whitespace;
-import com.vaadin.flow.theme.lumo.LumoUtility.Width;
-import java.io.ByteArrayInputStream;
-import java.util.Optional;
+import com.vaadin.flow.theme.lumo.LumoUtility.*;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
+import java.io.ByteArrayInputStream;
+import java.util.Optional;
+
+
 public class MainLayout extends AppLayout {
 
-    /**
-     * A simple navigation item component, based on ListItem element.
-     */
     public static class MenuItemInfo extends ListItem {
 
         private final Class<? extends Component> view;
@@ -78,8 +60,10 @@ public class MainLayout extends AppLayout {
 
     }
 
+
     private AuthenticatedUser authenticatedUser;
     private AccessAnnotationChecker accessChecker;
+
 
     public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
         this.authenticatedUser = authenticatedUser;
@@ -173,7 +157,7 @@ public class MainLayout extends AppLayout {
         imgCyInvestigation.setHeight("24px");
         imgCyInvestigation.setWidth("24px");
 
-        return new MenuItemInfo[]{ //
+        return new MenuItemInfo[]{
                 new MenuItemInfo("Origine", LineAwesomeIcon.GLOBE_SOLID.create(), HomeView.class), //
                 new MenuItemInfo("Produits", LineAwesomeIcon.TH_LIST_SOLID.create(), ProductsView.class), //
                 new MenuItemInfo("Services", LineAwesomeIcon.TH_LIST_SOLID.create(), ServicesView.class), //

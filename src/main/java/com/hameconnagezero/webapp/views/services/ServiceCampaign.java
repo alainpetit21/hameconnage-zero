@@ -13,6 +13,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+
 @PageTitle("ServiceCampaign")
 @Route(value = "ServiceCampaign", layout = MainLayout.class)
 @AnonymousAllowed

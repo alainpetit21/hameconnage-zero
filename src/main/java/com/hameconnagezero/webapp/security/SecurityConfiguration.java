@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends VaadinWebSecurity {
@@ -18,6 +19,7 @@ public class SecurityConfiguration extends VaadinWebSecurity {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -29,5 +31,4 @@ public class SecurityConfiguration extends VaadinWebSecurity {
         super.configure(http);
         setLoginView(http, LoginView.class);
     }
-
 }

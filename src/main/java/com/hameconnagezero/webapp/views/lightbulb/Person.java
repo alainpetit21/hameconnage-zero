@@ -10,6 +10,7 @@ public class Person {
     private String comments;
     private String shares;
 
+
     public Person() {
     }
 

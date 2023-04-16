@@ -1,13 +1,18 @@
 package com.hameconnagezero.webapp.views.lightbulb;
 
 import com.hameconnagezero.webapp.views.MainLayout;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
@@ -17,13 +22,14 @@ import jakarta.annotation.security.PermitAll;
 import java.util.Arrays;
 import java.util.List;
 
+
 @PageTitle("LightBulb")
 @Route(value = "LightBulb", layout = MainLayout.class)
 @PermitAll
-public class LightBulbView  extends Div implements AfterNavigationObserver {
-
+public class LightBulbView extends Div implements AfterNavigationObserver {
 
     Grid<Person> grid = new Grid<>();
+    List<Person> persons;
 
 
     public LightBulbView() {
@@ -32,6 +38,28 @@ public class LightBulbView  extends Div implements AfterNavigationObserver {
         grid.setHeight("100%");
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn(person -> createCard(person));
+
+        VerticalLayout vl = new VerticalLayout();
+        HorizontalLayout hl = new HorizontalLayout();
+
+        hl.add(new Label("Écrivez une requête pour LightBulb : "));
+        TextField textField = new TextField("");
+        Button button = new Button("Rechercher", e -> {
+            persons = Arrays.asList(
+                    createPerson("https://randomuser.me/api/portraits/men/42.jpg", "John Smith", "May 8",
+                            textField.getValue(),
+                            "0", "0", "0"),
+                    createLightBuldAIAnswer( "Apr 09",
+                            "D'après notre base de données, l'adresse email \"" + textField.getValue() + "\" a été observée dans une arnaque de cryptomonnaie connue pour être malveillante.\nNous recommandons fortement de ne pas interagir avec ce courriel et de le supprimer immédiatement.\nVeuillez également prendre les mesures de sécurité nécessaires pour protéger votre compte et vos informations personnelles.",
+                            "0", "0", "0"));
+            grid.setItems(persons);
+        });
+
+        hl.add(textField, button);
+        vl.add(hl);
+
+
+        add(vl);
         add(grid);
     }
 
@@ -44,6 +72,8 @@ public class LightBulbView  extends Div implements AfterNavigationObserver {
 
         Image image = new Image();
         image.setSrc(person.getImage());
+        image.setWidth("128px");
+        image.setHeight("128px");
         VerticalLayout description = new VerticalLayout();
         description.addClassName("description");
         description.setSpacing(false);
@@ -92,53 +122,27 @@ public class LightBulbView  extends Div implements AfterNavigationObserver {
     public void afterNavigation(AfterNavigationEvent event) {
 
         // Set some data when this view is displayed.
-        List<Person> persons = Arrays.asList( //
+        persons = Arrays.asList( //
                 createPerson("https://randomuser.me/api/portraits/men/42.jpg", "John Smith", "May 8",
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
+                        "info@life-news.jp",
                         "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/42.jpg", "Abagail Libbie", "May 3",
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
+                createLightBuldAIAnswer( "May 3",
+                        "D'après notre base de données, l'adresse email \"info@life-news.jp\" a été observée dans une arnaque de cryptomonnaie connue pour être malveillante. Nous recommandons fortement de ne pas interagir avec ce courriel et de le supprimer immédiatement. Veuillez également prendre les mesures de sécurité nécessaires pour protéger votre compte et vos informations personnelles.",
                         "1K", "500", "20"),
+
                 createPerson("https://randomuser.me/api/portraits/men/24.jpg", "Alberto Raya", "May 3",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
+                        "jorasanmiguel@hotmail.com",
                         "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/24.jpg", "Emmy Elsner", "Apr 22",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
+                createLightBuldAIAnswer( "Apr 22",
+                        "D'après notre base de données de IOC de courriel malveillants, l'adresse \"jorasanmiguel@hotmail.com\" a été observée dans plusieurs cas d'arnaques de livraison DHL en espagnol. Nous vous recommandons donc de ne pas répondre à ce courriel et de ne pas fournir d'informations personnelles ou financières à son expéditeur. Il est important de rester vigilant face à ce type d'arnaques et de ne pas se faire prendre au piège.",
                         "1K", "500", "20"),
+
                 createPerson("https://randomuser.me/api/portraits/men/76.jpg", "Alf Huncoot", "Apr 21",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
+                        "directiongeneral231@gmail.com",
                         "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/76.jpg", "Lidmila Vilensky", "Apr 17",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/94.jpg", "Jarrett Cawsey", "Apr 17",
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/94.jpg", "Tania Perfilyeva", "Mar 8",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/16.jpg", "Ivan Polo", "Mar 5",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/16.jpg", "Emelda Scandroot", "Mar 5",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/67.jpg", "Marcos Sá", "Mar 4",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/67.jpg", "Jacqueline Asong", "Mar 2",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
+                createLightBuldAIAnswer( "Apr 17",
+                        "D'après notre base de données de IOC, l'adresse e-mail \"directiongeneral231@gmail.com\" a été identifiée comme étant associée à des tentatives d'arnaques sur des fausses arrestations policières. Nous vous conseillons donc de ne pas répondre à ce courriel et de ne pas fournir d'informations personnelles ou financières à son expéditeur présumé. Il est important de signaler ce type de courriel suspect aux autorités compétentes et de sensibiliser vos proches à ces types d'arnaques. Soyez vigilant et ne laissez pas ces criminels vous piéger.",
                         "1K", "500", "20")
-
         );
 
         grid.setItems(persons);
@@ -149,6 +153,19 @@ public class LightBulbView  extends Div implements AfterNavigationObserver {
         Person p = new Person();
         p.setImage(image);
         p.setName(name);
+        p.setDate(date);
+        p.setPost(post);
+        p.setLikes(likes);
+        p.setComments(comments);
+        p.setShares(shares);
+
+        return p;
+    }
+    private static Person createLightBuldAIAnswer(String date, String post, String likes,
+                                            String comments, String shares) {
+        Person p = new Person();
+        p.setImage("images/LightBulb.png");
+        p.setName("LightBulbAI");
         p.setDate(date);
         p.setPost(post);
         p.setLikes(likes);

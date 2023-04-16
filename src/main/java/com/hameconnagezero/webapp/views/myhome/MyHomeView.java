@@ -10,6 +10,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import jakarta.annotation.security.PermitAll;
 
+
 @PageTitle("MyHome")
 @Route(value = "MyHome", layout = MainLayout.class)
 @PermitAll

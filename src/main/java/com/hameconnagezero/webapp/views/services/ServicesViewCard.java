@@ -19,6 +19,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 
+
 public class ServicesViewCard extends ListItem {
 
     public ServicesViewCard(String text, String url) {
@@ -54,6 +55,5 @@ public class ServicesViewCard extends ListItem {
         badge.setText("Label");
 
         add(div, header, subtitle, description, badge);
-
     }
 }
