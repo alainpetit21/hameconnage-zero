@@ -1,14 +1,14 @@
-package com.hameconnagezero.webapp.views.lightsail;
+package com.hameconnagezero.webapp.views.lightsailadmin;
 
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
 
 @PermitAll
-@Route(value = "LightSailN1E1", layout = LightSailView.class)
-public class LightSailN1E1 extends LightSailExercices {
+@Route(value = "LightSailAdminC1", layout = LightSailAdminView.class)
+public class LightSailAdminC1 extends LightSailAdminCampaign {
 
-    public LightSailN1E1() {
+    public LightSailAdminC1() {
         super("""
                 Date : 12 avril 2023
                 De : support@microsoft-outlook.com
@@ -25,6 +25,7 @@ public class LightSailN1E1 extends LightSailExercices {
                 Nous vous remercions de votre collaboration.
 
                 Cordialement,
-                Le support de Microsoft Outlook""");
+                Le support de Microsoft Outlook""", "images/Campaign20230312_Score.png", "50%");
+
     }
 }

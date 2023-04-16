@@ -1,14 +1,14 @@
-package com.hameconnagezero.webapp.views.lightsail;
+package com.hameconnagezero.webapp.views.lightsailadmin;
 
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
 
 @PermitAll
-@Route(value = "LightSailN1E2", layout = LightSailView.class)
-public class LightSailN1E2 extends LightSailExercices {
+@Route(value = "LightSailAdminC2", layout = LightSailAdminView.class)
+public class LightSailAdminC2 extends LightSailAdminCampaign {
 
-    public LightSailN1E2() {
+    public LightSailAdminC2() {
         super("""
                 Date : 12 avril 2023
                 De : support@banquefictive.com
@@ -23,6 +23,7 @@ public class LightSailN1E2 extends LightSailExercices {
                 Nous vous remercions de votre coopération.
 
                 Cordialement,
-                Le support de Banque Fictive""");
+                Le support de Banque Fictive""", "images/Campaign20230316_Score.png", "75%");
+
     }
 }

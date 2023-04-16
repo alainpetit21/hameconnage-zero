@@ -1,14 +1,14 @@
-package com.hameconnagezero.webapp.views.lightsail;
+package com.hameconnagezero.webapp.views.lightsailadmin;
 
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
 
 @PermitAll
-@Route(value = "LightSailN2E1", layout = LightSailView.class)
-public class LightSailN2E1 extends LightSailExercices {
+@Route(value = "LightSailAdminC4", layout = LightSailAdminView.class)
+public class LightSailAdminC4 extends LightSailAdminCampaign {
 
-    public LightSailN2E1() {
+    public LightSailAdminC4() {
         super("""
                 Date : 12 avril 2023
                 De : support@fedex.com
@@ -23,6 +23,7 @@ public class LightSailN2E1 extends LightSailExercices {
                 Nous vous remercions de votre coopération.
 
                 Cordialement,
-                Le support de FedEx""");
+                Le support de FedEx""", "images/Campaign20230601_Score.png", "100%");
+
     }
 }

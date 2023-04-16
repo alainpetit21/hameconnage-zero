@@ -9,7 +9,6 @@ import com.hameconnagezero.webapp.views.lightbulb.LightBulbView;
 import com.hameconnagezero.webapp.views.lightsail.LightSailView;
 import com.hameconnagezero.webapp.views.lightsailadmin.LightSailAdminView;
 import com.hameconnagezero.webapp.views.lightsensor.LightSensorView;
-import com.hameconnagezero.webapp.views.myhome.MyHomeView;
 import com.hameconnagezero.webapp.views.products.ProductsView;
 import com.hameconnagezero.webapp.views.services.ServicesView;
 import com.vaadin.flow.component.Component;
@@ -162,7 +161,6 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Produits", LineAwesomeIcon.TH_LIST_SOLID.create(), ProductsView.class), //
                 new MenuItemInfo("Services", LineAwesomeIcon.TH_LIST_SOLID.create(), ServicesView.class), //
                 new MenuItemInfo("À propos de nous", LineAwesomeIcon.FILE.create(), AboutView.class), //
-                new MenuItemInfo("Zone Clients", LineAwesomeIcon.GLOBE_SOLID.create(), MyHomeView.class), //
                 new MenuItemInfo("LightSail", imgLightSail, LightSailView.class), //
                 new MenuItemInfo("LightSail (Admin)", imgLightSail2, LightSailAdminView.class), //
                 new MenuItemInfo("LightBulb", imgLightBulb, LightBulbView.class), //

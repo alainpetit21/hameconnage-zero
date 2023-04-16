@@ -2,7 +2,6 @@ package com.hameconnagezero.webapp.views.lightsail;
 
 import com.hameconnagezero.webapp.views.MainLayout;
 import com.vaadin.flow.component.accordion.Accordion;
-import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
@@ -98,10 +97,10 @@ public class LightSailView extends Div implements RouterLayout {
         formationSurMesure.add(new RouterLink("Exercices Difficiles", LightSailN3E3.class));
 
         Accordion accordion = new Accordion();
-        AccordionPanel ap1 = accordion.add("Formation Niveau 1", formationNiveau1);
-        AccordionPanel ap2 = accordion.add("Formation Niveau 2", formationNiveau2);
-        AccordionPanel ap3 = accordion.add("Formation Niveau 3", formationNiveau3);
-        AccordionPanel ap4 = accordion.add("Formation sur mesure", formationSurMesure);
+        accordion.add("Formation Niveau 1", formationNiveau1);
+        accordion.add("Formation Niveau 2", formationNiveau2);
+        accordion.add("Formation Niveau 3", formationNiveau3);
+        accordion.add("Formation sur mesure", formationSurMesure);
 
         return new VerticalLayout(accordion);
     }

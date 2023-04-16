@@ -1,14 +1,14 @@
-package com.hameconnagezero.webapp.views.lightsail;
+package com.hameconnagezero.webapp.views.lightsailadmin;
 
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
 
 @PermitAll
-@Route(value = "LightSailN1E3", layout = LightSailView.class)
-public class LightSailN1E3 extends LightSailExercices {
+@Route(value = "LightSailAdminC3", layout = LightSailAdminView.class)
+public class LightSailAdminC3 extends LightSailAdminCampaign {
 
-    public LightSailN1E3() {
+    public LightSailAdminC3() {
         super("""
                 Date : 12 avril 2023
                 De : serviceclient@paypal.com
@@ -23,6 +23,7 @@ public class LightSailN1E3 extends LightSailExercices {
                 Nous vous remercions de votre coopération.
 
                 Cordialement,
-                Le service client de PayPal""");
+                Le service client de PayPal""", "images/Campaign20230501_Score.png", "50%");
+
     }
 }

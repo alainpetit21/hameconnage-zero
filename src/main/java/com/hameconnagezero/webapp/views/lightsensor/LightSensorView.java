@@ -183,8 +183,8 @@ public class LightSensorView extends Div implements BeforeEnterObserver {
         emailTo = new TextField("emailTo");
         subject = new TextField("subject");
         text = new TextField("text");
-        hasAttachment = new Checkbox("hasAttachment");
-        wasInvestigated = new Checkbox("wasInvestigated");
+        hasAttachment = new Checkbox("pièces jointes?");
+        wasInvestigated = new Checkbox("demande d'enquête?");
         formLayout.add(dateReceived, emailFrom, emailReplyTo, emailTo, subject, text, hasAttachment, wasInvestigated);
 
         editorDiv.add(formLayout);

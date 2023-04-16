@@ -1,13 +1,11 @@
 package com.hameconnagezero.webapp.views.home;
 
 import com.hameconnagezero.webapp.views.MainLayout;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
@@ -20,10 +18,6 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 @RouteAlias(value = "", layout = MainLayout.class)
 @AnonymousAllowed
 public class HomeView extends VerticalLayout {
-
-    private TextField name;
-    private Button sayHello;
-
 
     public HomeView() {
         setSpacing(true);
