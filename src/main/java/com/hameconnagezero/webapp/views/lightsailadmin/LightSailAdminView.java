@@ -1,5 +1,7 @@
 package com.hameconnagezero.webapp.views.lightsailadmin;
 
+import com.hameconnagezero.webapp.data.entity.User;
+import com.hameconnagezero.webapp.security.AuthenticatedUser;
 import com.hameconnagezero.webapp.views.MainLayout;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.dependency.Uses;
@@ -11,8 +13,12 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.StreamResource;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
+
+import java.io.ByteArrayInputStream;
+import java.util.Optional;
 
 
 @PageTitle("LightSail (Admin)")
@@ -26,11 +32,14 @@ public class LightSailAdminView extends Div implements RouterLayout {
     public VerticalLayout detail;
     VerticalLayout master;
     SplitLayout splitLayout;
+    private AuthenticatedUser authenticatedUser;
 
 
-    public LightSailAdminView() {
+    public LightSailAdminView(AuthenticatedUser authenticatedUser) {
         setHeight("100%");
         ptThis = this;
+        this.authenticatedUser = authenticatedUser;
+
         splitLayout = new SplitLayout();
         master = new VerticalLayout();
         detail = new VerticalLayout();
@@ -44,11 +53,8 @@ public class LightSailAdminView extends Div implements RouterLayout {
         HorizontalLayout menuBar= new HorizontalLayout();
 
         VerticalLayout avatarUser = new VerticalLayout();
-        Image avatar = new Image("images/Avatar.png", "Admin");
-        avatar.setHeight("128px");
-        avatar.setWidth("128px");
-        avatarUser.add(avatar);
-        avatarUser.add(new Label("Admin"));
+        avatarUser.add(getAvatarPictureOfCurrentUser());
+        avatarUser.add(getAvatarName());
         menuBar.add(avatarUser);
 
         overallRightSide.add(menuBar);
@@ -80,6 +86,41 @@ public class LightSailAdminView extends Div implements RouterLayout {
         accordion.add("Survol campagnes", overview);
 
         return new VerticalLayout(accordion);
+    }
+
+
+    Image getAvatarPictureOfCurrentUser(){
+        Optional<User> maybeUser = authenticatedUser.get();
+        Image avatarImage;
+
+        if (maybeUser.isPresent()) {
+            User user = maybeUser.get();
+            StreamResource resource = new StreamResource("profile-pic", () -> new ByteArrayInputStream(user.getProfilePicture()));
+
+            avatarImage = new Image(resource, "Avatar");
+
+        }else{
+            avatarImage = new Image("images/Avatar.png", "Avatar");
+        }
+
+        avatarImage.setHeight("64px");
+        avatarImage.setWidth("64px");
+        return avatarImage;
+    }
+
+    private String getAvatarName() {
+        Optional<User> maybeUser = authenticatedUser.get();
+        String avatarName;
+
+        if (maybeUser.isPresent()) {
+            User user = maybeUser.get();
+            avatarName = user.getName();
+
+        } else {
+            avatarName = "User";
+        }
+
+        return avatarName;
     }
 
 }
